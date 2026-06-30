@@ -1,0 +1,1058 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dnotitia 2026 2Q Townhall Meeting</title>
+  <style>
+    :root {
+      --brand-navy: #001529;
+      --brand-orange: #ff6b00;
+      --ink: #f7fbff;
+      --muted: rgba(247, 251, 255, 0.72);
+      --line: rgba(255, 255, 255, 0.16);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      background: var(--brand-navy);
+      color: var(--ink);
+      font-family: Pretendard, "Pretendard Variable", "Apple SD Gothic Neo", "Noto Sans KR", "Segoe UI", sans-serif;
+    }
+
+    body {
+      position: relative;
+    }
+
+    .deck {
+      position: fixed;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(0, 21, 41, 0.98), rgba(0, 21, 41, 0.66) 45%, rgba(0, 21, 41, 0.48)),
+        url("townhall-bg.png") center / cover no-repeat;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      min-width: 100%;
+      min-height: 100%;
+      padding: clamp(30px, 4.1vw, 70px);
+      opacity: 0;
+      transform: translateX(32px);
+      pointer-events: none;
+      transition: opacity 280ms ease, transform 280ms ease;
+    }
+
+    .slide.active {
+      opacity: 1;
+      transform: translateX(0);
+      pointer-events: auto;
+    }
+
+    .topbar,
+    .bottombar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      letter-spacing: 0;
+    }
+
+    .brand {
+      font-size: clamp(20px, 1.9vw, 34px);
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .quarter {
+      color: var(--muted);
+      font-size: clamp(12px, 1vw, 17px);
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      max-width: 1220px;
+      padding: 24px 0;
+    }
+
+    .eyebrow {
+      color: var(--brand-orange);
+      font-size: clamp(16px, 1.45vw, 24px);
+      font-weight: 800;
+      margin-bottom: clamp(18px, 2vw, 30px);
+    }
+
+    h1,
+    h2 {
+      margin: 0;
+      line-height: 0.96;
+      letter-spacing: 0;
+      text-wrap: balance;
+    }
+
+    h1 {
+      max-width: 1030px;
+      font-size: clamp(52px, 8.7vw, 142px);
+      font-weight: 900;
+    }
+
+    h2 {
+      max-width: 1160px;
+      font-size: clamp(48px, 7.8vw, 126px);
+      font-weight: 900;
+    }
+
+    .subtitle {
+      max-width: 960px;
+      margin-top: clamp(22px, 2.4vw, 42px);
+      color: var(--muted);
+      font-size: clamp(20px, 2vw, 34px);
+      font-weight: 600;
+      line-height: 1.32;
+    }
+
+    .accent-rule {
+      width: clamp(90px, 9vw, 160px);
+      height: 8px;
+      margin-top: clamp(30px, 3.1vw, 54px);
+      background: var(--brand-orange);
+      border-radius: 999px;
+      box-shadow: 0 0 34px rgba(255, 107, 0, 0.42);
+    }
+
+    .agenda {
+      width: min(1080px, 100%);
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px 20px;
+      margin-top: clamp(22px, 2.6vw, 42px);
+      counter-reset: agenda;
+    }
+
+    .agenda-item {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      align-items: center;
+      min-height: 70px;
+      border-top: 1px solid var(--line);
+      color: #fff;
+      font-size: clamp(19px, 1.6vw, 29px);
+      font-weight: 800;
+      line-height: 1.16;
+    }
+
+    .agenda-item::before {
+      counter-increment: agenda;
+      content: counter(agenda, decimal-leading-zero);
+      color: var(--brand-orange);
+      font-size: clamp(15px, 1.1vw, 19px);
+      font-weight: 900;
+    }
+
+    .section-index {
+      color: rgba(255, 255, 255, 0.2);
+      font-size: clamp(96px, 16vw, 260px);
+      font-weight: 900;
+      line-height: 0.74;
+      margin-bottom: clamp(16px, 1.8vw, 30px);
+    }
+
+    .section-title {
+      max-width: 980px;
+    }
+
+    .members-slide .content {
+      max-width: none;
+      justify-content: flex-start;
+      padding-top: clamp(16px, 2vw, 28px);
+    }
+
+    .members-heading {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 28px;
+      width: 100%;
+      margin-bottom: clamp(18px, 2vw, 30px);
+    }
+
+    .members-heading h2 {
+      font-size: clamp(38px, 4.6vw, 72px);
+      line-height: 1;
+    }
+
+    .group-label {
+      color: var(--brand-orange);
+      font-size: clamp(16px, 1.4vw, 23px);
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .member-grid {
+      display: grid;
+      grid-template-columns: repeat(8, minmax(0, 1fr));
+      gap: clamp(10px, 1.2vw, 18px);
+      width: 100%;
+      align-items: start;
+    }
+
+    .member-card {
+      min-width: 0;
+    }
+
+    .member-photo {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.06);
+      box-shadow: 0 16px 44px rgba(0, 0, 0, 0.28);
+    }
+
+    .member-photo img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .member-name {
+      margin-top: clamp(10px, 1vw, 14px);
+      color: #fff;
+      font-size: clamp(17px, 1.5vw, 26px);
+      font-weight: 900;
+      line-height: 1.05;
+      text-align: center;
+    }
+
+    .member-date {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: clamp(11px, 0.95vw, 15px);
+      font-weight: 800;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .member-team {
+      margin-top: 4px;
+      color: rgba(255, 255, 255, 0.92);
+      font-size: clamp(11px, 0.95vw, 15px);
+      font-weight: 900;
+      line-height: 1.12;
+      text-align: center;
+      word-break: keep-all;
+    }
+
+    .uniform-slide .content {
+      max-width: none;
+      justify-content: flex-start;
+      padding-top: clamp(8px, 1vw, 16px);
+    }
+
+    .uniform-heading {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 28px;
+      width: 100%;
+      margin-bottom: clamp(10px, 1.1vw, 16px);
+    }
+
+    .uniform-heading h2 {
+      font-size: clamp(38px, 4.3vw, 64px);
+      line-height: 1;
+    }
+
+    .uniform-grid {
+      display: grid;
+      grid-template-columns: repeat(8, minmax(0, 1fr));
+      gap: clamp(7px, 0.75vw, 11px);
+      width: min(910px, 100%);
+    }
+
+    .uniform-card {
+      min-width: 0;
+    }
+
+    .uniform-photo {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 12px 34px rgba(0, 0, 0, 0.28);
+    }
+
+    .uniform-photo img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .uniform-name {
+      margin-top: 4px;
+      color: #fff;
+      font-size: clamp(10px, 0.82vw, 13px);
+      font-weight: 900;
+      line-height: 1;
+      text-align: center;
+    }
+
+    .uniform-team {
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: clamp(8px, 0.68vw, 10px);
+      font-weight: 800;
+      line-height: 1.05;
+      text-align: center;
+      word-break: keep-all;
+    }
+
+    .uniform-poster {
+      width: min(1020px, 100%);
+      aspect-ratio: 704 / 411;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 22px 62px rgba(0, 0, 0, 0.34);
+    }
+
+    .uniform-poster img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .awards-slide .content {
+      max-width: none;
+      justify-content: flex-start;
+      padding-top: clamp(16px, 2vw, 28px);
+    }
+
+    .awards-heading {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 28px;
+      width: 100%;
+      margin-bottom: clamp(22px, 2.4vw, 38px);
+    }
+
+    .awards-heading h2 {
+      font-size: clamp(44px, 5.2vw, 82px);
+      line-height: 1;
+    }
+
+    .awards-group-label {
+      color: var(--brand-orange);
+      font-size: clamp(16px, 1.4vw, 23px);
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .award-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: clamp(16px, 1.7vw, 26px);
+      width: 100%;
+      align-items: stretch;
+    }
+
+    .core-grid {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: clamp(12px, 1.25vw, 18px);
+    }
+
+    .award-plaque {
+      position: relative;
+      display: block;
+      width: 100%;
+      height: auto;
+      min-height: clamp(260px, 31vw, 360px);
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 8px;
+      padding: clamp(20px, 2vw, 30px);
+      color: #fff;
+      text-align: left;
+      cursor: pointer;
+      box-shadow: 0 22px 58px rgba(0, 0, 0, 0.34);
+      backdrop-filter: none;
+      isolation: isolate;
+    }
+
+    .award-plaque::before,
+    .award-plaque::after {
+      position: absolute;
+      inset: 0;
+      content: "";
+      pointer-events: none;
+    }
+
+    .award-plaque::before {
+      z-index: -1;
+      background:
+        radial-gradient(circle at 18% 12%, rgba(255, 255, 255, 0.44), transparent 23%),
+        linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent 32%, rgba(0, 0, 0, 0.24) 100%);
+    }
+
+    .award-plaque::after {
+      width: 44%;
+      transform: translateX(-160%) skewX(-18deg);
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.72), transparent);
+      opacity: 0;
+    }
+
+    .award-plaque.gold {
+      background:
+        linear-gradient(145deg, #fff4be 0%, #dba83a 34%, #875a13 70%, #f3cb64 100%);
+    }
+
+    .award-plaque.silver {
+      background:
+        linear-gradient(145deg, #f8fbff 0%, #b9c1ca 35%, #5f6975 72%, #dce4ec 100%);
+    }
+
+    .award-plaque.bronze {
+      background:
+        linear-gradient(145deg, #ffd9a0 0%, #b87333 34%, #653714 72%, #d99a57 100%);
+    }
+
+    .award-plaque:hover,
+    .award-plaque:focus-visible {
+      border-color: rgba(255, 255, 255, 0.54);
+      outline: none;
+      transform: translateY(-2px);
+    }
+
+    .award-plaque.sparkle::after {
+      animation: plaque-sparkle 960ms ease;
+    }
+
+    .award-type {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      padding: 7px 12px;
+      border: 1px solid rgba(255, 255, 255, 0.34);
+      border-radius: 999px;
+      background: rgba(0, 21, 41, 0.28);
+      color: rgba(255, 255, 255, 0.92);
+      font-size: clamp(12px, 0.92vw, 15px);
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .award-name {
+      margin-top: clamp(40px, 4vw, 62px);
+      color: #fff;
+      font-size: clamp(42px, 4.2vw, 70px);
+      font-weight: 900;
+      line-height: 1;
+      text-shadow: 0 3px 22px rgba(0, 0, 0, 0.32);
+    }
+
+    .award-dept {
+      margin-top: clamp(20px, 2vw, 30px);
+      color: rgba(255, 255, 255, 0.84);
+      font-size: clamp(15px, 1.25vw, 21px);
+      font-weight: 800;
+      line-height: 1.34;
+      word-break: keep-all;
+    }
+
+    .award-plaque.gold .award-dept,
+    .award-plaque.gold .award-type {
+      color: rgba(0, 21, 41, 0.82);
+    }
+
+    .award-plaque.gold .award-name,
+    .award-plaque.bronze .award-name {
+      color: #001529;
+      text-shadow: 0 2px 18px rgba(255, 255, 255, 0.34);
+    }
+
+    .award-plaque.bronze .award-dept,
+    .award-plaque.bronze .award-type {
+      color: rgba(0, 21, 41, 0.84);
+    }
+
+    .core-grid .award-plaque {
+      min-height: clamp(238px, 27vw, 318px);
+      padding: clamp(16px, 1.5vw, 23px);
+    }
+
+    .core-grid .award-name {
+      margin-top: clamp(32px, 3vw, 50px);
+      font-size: clamp(36px, 3.5vw, 58px);
+    }
+
+    .core-grid .award-dept {
+      margin-top: clamp(18px, 1.5vw, 24px);
+      font-size: clamp(14px, 1vw, 17px);
+    }
+
+    @keyframes plaque-sparkle {
+      0% {
+        opacity: 0;
+        transform: translateX(-160%) skewX(-18deg);
+      }
+      18% {
+        opacity: 0.95;
+      }
+      100% {
+        opacity: 0;
+        transform: translateX(260%) skewX(-18deg);
+      }
+    }
+
+    .closing h2 {
+      max-width: 1280px;
+      font-size: clamp(46px, 7vw, 112px);
+      line-height: 1.02;
+    }
+
+    .progress {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 180px;
+    }
+
+    .progress-track {
+      width: 120px;
+      height: 4px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.18);
+      border-radius: 999px;
+    }
+
+    .progress-fill {
+      width: 0%;
+      height: 100%;
+      background: var(--brand-orange);
+      border-radius: inherit;
+      transition: width 280ms ease;
+    }
+
+    .count {
+      min-width: 48px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 800;
+      text-align: right;
+    }
+
+    .controls {
+      position: fixed;
+      right: 28px;
+      bottom: 24px;
+      z-index: 20;
+      display: flex;
+      gap: 8px;
+    }
+
+    button {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      background: rgba(0, 21, 41, 0.62);
+      color: #fff;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+    }
+
+    button:hover,
+    button:focus-visible {
+      border-color: rgba(255, 107, 0, 0.82);
+      outline: none;
+    }
+
+    svg {
+      width: 22px;
+      height: 22px;
+      stroke-width: 2.4;
+    }
+
+    @media (max-width: 760px) {
+      .slide {
+        padding: 26px;
+      }
+
+      .agenda {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+
+      .agenda-item {
+        grid-template-columns: 42px 1fr;
+        min-height: 48px;
+      }
+
+      .members-heading {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .member-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .uniform-heading {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .uniform-poster {
+        aspect-ratio: 704 / 411;
+      }
+
+      .awards-heading {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .award-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .core-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .award-plaque {
+        min-height: 210px;
+      }
+
+      .bottombar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .controls {
+        right: 18px;
+        bottom: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="deck" aria-live="polite">
+    <section class="slide active">
+      <header class="topbar">
+        <div class="brand">Dnotitia</div>
+        <div class="quarter">2026 2Q Townhall</div>
+      </header>
+      <div class="content">
+        <div class="eyebrow">Townhall Meeting</div>
+        <h1>Dnotitia 2026 2Q Townhall Meeting</h1>
+        <p class="subtitle">Pioneering the Next Era of AI with Vector Intelligence</p>
+        <div class="accent-rule"></div>
+      </div>
+      <footer class="bottombar">
+        <div>Opening</div>
+        <div class="progress"><div class="progress-track"><div class="progress-fill"></div></div><span class="count"></span></div>
+      </footer>
+    </section>
+
+    <section class="slide">
+      <header class="topbar">
+        <div class="brand">Dnotitia</div>
+        <div class="quarter">Agenda</div>
+      </header>
+      <div class="content">
+        <div class="eyebrow">Today&apos;s Flow</div>
+        <h2>목차</h2>
+        <div class="agenda">
+          <div class="agenda-item">Organization Lecture</div>
+          <div class="agenda-item">R&amp;D / Business Roadmap</div>
+          <div class="agenda-item">AKB Demo</div>
+          <div class="agenda-item">HR News</div>
+          <div class="agenda-item">New Members Introduction</div>
+          <div class="agenda-item">Core Value Case</div>
+          <div class="agenda-item">DN Awards</div>
+          <div class="agenda-item">Dnotitia Roadmap</div>
+        </div>
+      </div>
+      <footer class="bottombar">
+        <div>Agenda</div>
+        <div class="progress"><div class="progress-track"><div class="progress-fill"></div></div><span class="count"></span></div>
+      </footer>
+    </section>
+
+    <section class="slide section-slide" data-label="Organization Lecture">
+      <header class="topbar"><div class="brand">Dnotitia</div><div class="quarter">Session</div></header>
+      <div class="content"><div class="section-index">01</div><h2 class="section-title">Organization Lecture</h2><div class="accent-rule"></div></div>
+      <footer class="bottombar"><div>Session 01</div><div class="progress"><div class="progress-track"><div class="progress-fill"></div></div><span class="count"></span></div></footer>
+    </section>
+
+    <section class="slide section-slide" data-label="R&D / Business Roadmap">
+      <header class="topbar"><div class="brand">Dnotitia</div><div class="quarter">Session</div></header>
+      <div class="content"><div class="section-index">02</div><h2 class="section-title">R&amp;D / Business Roadmap</h2><div class="accent-rule"></div></div>
+      <footer class="bottombar"><div>Session 02</div><div class="progress"><div class="progress-track"><div class="progress-fill"></div></div><span class="count"></span></div></footer>
+    </section>
+
+    <section class="slide section-slide" data-label="AKB Demo">
+      <header class="topbar"><div class="brand">Dnotitia</div><div class="quarter">Session</div></header>
+      <div class="content"><div class="section-index">03</div><h2 class="section-title">AKB Demo</h2><div class="accent-rule"></div></div>
+      <footer class="bottombar"><div>Session 03</div><div class="progress"><div class="progress-track"><div class="progress-fill"></div></div><span class="count"></span></div></footer>
+    </section>
+
+    <section class="slide section-slide" data-label="HR News">
+      <header class="topbar"><div class="brand">Dnotitia</div><div class="quarter">Session</div></header>
+      <div class="content"><div class="section-index">04</div><h2 class="section-title">HR News</h2><div class="accent-rule"></div></div>
+      <footer class="bottombar"><div>Session 04</div><div class="progress"><div class="progress-track"><div class="progress-fill"></div></div><span class="count"></span></div></footer>
+    </section>
+
+    <section class="slide section-slide" data-label="New Members Introduction">
+      <header class="topbar"><div class="brand">Dnotitia</div><div class="quarter">Session</div></header>
+      <div class="content"><div class="section-index">05</div><h2 class="section-title">New Members Introduction</h2><div class="accent-rule"></div></div>
+      <footer class="bottombar"><div>Session 05</div><div class="progress"><div class="progress-track"><div class="progress-fill"></div></div><span class="count"></span></div></footer>
+    </section>
+
+    <section class="slide members-slide">
+      <header class="topbar"><div class="brand">Dnotitia</div><div class="quarter">New Members</div></header>
+      <div class="content">
+        <div class="members-heading"><h2>New Members Introduction</h2><div class="group-label">Group 01 / 03</div></div>
+        <div class="member-grid">
+          <article class="member-card"><div class="member-photo"><img src="new-members/260401_김형록.jpg" alt="김형록"></div><div class="member-name">김형록</div><div class="member-date">2026.4.1 입사</div><div class="member-team">DC TF</div></article>
+          <article class="member-card"><div class="member-photo"><img src="new-members/260401_최성진.jpg" alt="최성진"></div><div class="member-name">최성진</div><div class="member-date">2026.4.1 입사</div><div class="member-team">프로젝트기획팀</div></article>
+          <article class="member-card"><div class="member-photo"><img src="new-members/260406_김동범.jpg" alt="김동범"></div><div class="member-name">김동범</div><div class="member-date">2026.4.6 입사</div><div class="member-team">인사팀</div></article>
+          <article class="member-card"><div class="member-photo"><img src="new-members/260410_박철희.jpg" alt="박철희"></div><div class="member-name">박철희</div><div class="member-date">2026.4.10 입사</div><div class="member-team">사업기획팀</div></article>
+          <article class="member-card"><div class="member-photo"><img src="new-members/260413_정창욱.jpg" alt="정창욱"></div><div class="member-name">정창욱</div><div class="member-date">2026.4.13 입사</div><div class="member-team">Agent팀</div></article>
+          <article class="member-card"><div class="member-photo"><img src="new-members/260420_남예현.jpg" alt="남예현"></div><div class="member-name">남예현</div><div class="member-date">2026.4.20 입사</div><div class="member-team">DB팀</div></article>
+          <article class="member-card"><div class="member-photo"><img src="new-members/260421_유철호.jpg" alt="유철호"></div><div class="member-name">유철호</div><div class="member-date">2026.4.21 입사</div><div class="member-team">전략팀</div></article>
+          <article class="member-card"><div class="member-photo"><img src="new-members/260427_정문권.jpg" alt="정문권"></div><div class="member-name">정문권</div><div class="member-date">2026.4.27 입사</div><div class="member-team">HW P.팀</div></article>
+        </div>
+      </div>
+      <footer class="bottombar"><div>New Members</div><div class="progress"><div class="progress-track"><div class="progress-fill"></div></div><span class="count"></span></div></footer>
+    </section>
+
+    <section class="slide members-slide">
+      <header class="topbar"><div class="brand">Dnotitia</div><div class="quarter">New Members</div></header>
+      <div class="content">
+        <div class="members-heading"><h2>New Members Introduction</h2><div class="group-label">Group 02 / 03</div></div>
+        <div class="member-grid">
+          <article class="member-card"><div class="member-photo"><img src="new-members/260427_정민섭.jpg" alt="정민섭"></div><div class="member-name">정민섭</div><div class="member-date">2026.4.27 입사</div><div class="member-team">LLM팀</div></article>
+          <article class="member-card"><div class="member-photo"><img src="new-members/260427_진민우.jpg" alt="진민우"></div><div class="member-name">진민우</div><div class="member-date">2026.4.27 입사</div><div class="member-team">S.SW팀</div></article>
+          <article class="member-card"><div class="member-photo"><img src="new-members/260506_정연우.jpg" alt="정연우"></div><div class="member-name">정연우</div><div class="member-date">2026.5.6 입사</div><div class="member-team">Vector Platform팀</div></article>
+          <article class="member-card"><div class="member-photo"><img src="new-members/260511_최정인.jpg" alt="최정인"></div><div class="member-name">최정인</div><div class="member-date">2026.5.11 입사</div><div class="member-team">전략팀</div></article>
+          <article class="member-card"><div class="member-photo"><img src="new-members/260518_송지환.jpg" alt="송지환"></div><div class="member-name">송지환</div><div class="member-date">2026.5.18 입사</div><div class="member-team">Design팀</div></article>
+          <article class="member-card"><div class="member-photo"><img src="new-members/260518_유한울.jpg" alt="유한울"></div><div class="member-name">유한울</div><div class="member-date">2026.5.18 입사</div><div class="member-team">사업기획팀</div></article>
+          <article class="member-card"><div class="member-photo"><img src="new-members/260521_서지희.jpg" alt="서지희"></div><div class="member-name">서지희</div><div class="member-date">2026.5.21 입사</div><div class="member-team">Design팀</div></article>
+          <article class="member-card"><div class="member-photo"><img src="new-members/260526_유흥식.jpg" alt="유흥식"></div><div class="member-name">유흥식</div><div class="member-date">2026.5.26 입사</div><div class="member-team">AI Tech팀</div></article>
+        </div>
+      </div>
+      <footer class="bottombar"><div>New Members</div><div class="progress"><div class="progress-track"><div class="progress-fill"></div></div><span class="count"></span></div></footer>
+    </section>
+
+    <section class="slide members-slide">
+      <header class="topbar"><div class="brand">Dnotitia</div><div class="quarter">New Members</div></header>
+      <div class="content">
+        <div class="members-heading"><h2>New Members Introduction</h2><div class="group-label">Group 03 / 03</div></div>
+        <div class="member-grid">
+          <article class="member-card"><div class="member-photo"><img src="new-members/260601_백승록.jpg" alt="백승록"></div><div class="member-name">백승록</div><div class="member-date">2026.6.1 입사</div><div class="member-team">Storage/Cloud팀</div></article>
+          <article class="member-card"><div class="member-photo"><img src="new-members/260601_서승연.jpg" alt="서승연"></div><div class="member-name">서승연</div><div class="member-date">2026.6.1 입사</div><div class="member-team">Algo.팀</div></article>
+          <article class="member-card"><div class="member-photo"><img src="new-members/260601_양재원.jpg" alt="양재원"></div><div class="member-name">양재원</div><div class="member-date">2026.6.1 입사</div><div class="member-team">AI Tech팀</div></article>
+          <article class="member-card"><div class="member-photo"><img src="new-members/260608_김벼리.jpg" alt="김벼리"></div><div class="member-name">김벼리</div><div class="member-date">2026.6.8 입사</div><div class="member-team">Design팀</div></article>
+          <article class="member-card"><div class="member-photo"><img src="new-members/260608_손광섭.jpg" alt="손광섭"></div><div class="member-name">손광섭</div><div class="member-date">2026.6.8 입사</div><div class="member-team">재무팀</div></article>
+          <article class="member-card"><div class="member-photo"><img src="new-members/260608_이민희.jpg" alt="이민희"></div><div class="member-name">이민희</div><div class="member-date">2026.6.8 입사</div><div class="member-team">전략팀</div></article>
+          <article class="member-card"><div class="member-photo"><img src="new-members/260622_김주호.jpg" alt="김주호"></div><div class="member-name">김주호</div><div class="member-date">2026.6.22 입사</div><div class="member-team">사업본부</div></article>
+          <article class="member-card"><div class="member-photo"><img src="new-members/260622_윤표진.jpg" alt="윤표진"></div><div class="member-name">윤표진</div><div class="member-date">2026.6.22 입사</div><div class="member-team">S.SW팀</div></article>
+        </div>
+      </div>
+      <footer class="bottombar"><div>New Members</div><div class="progress"><div class="progress-track"><div class="progress-fill"></div></div><span class="count"></span></div></footer>
+    </section>
+
+    <section class="slide section-slide" data-label="Core Value Case">
+      <header class="topbar"><div class="brand">Dnotitia</div><div class="quarter">Session</div></header>
+      <div class="content"><div class="section-index">06</div><h2 class="section-title">Core Value Case</h2><div class="accent-rule"></div></div>
+      <footer class="bottombar"><div>Session 06</div><div class="progress"><div class="progress-track"><div class="progress-fill"></div></div><span class="count"></span></div></footer>
+    </section>
+
+    <section class="slide awards-slide core-value-slide">
+      <header class="topbar"><div class="brand">Dnotitia</div><div class="quarter">Core Value Case</div></header>
+      <div class="content">
+        <div class="awards-heading"><h2>Core Value Case</h2><div class="awards-group-label">Group 01 / 05</div></div>
+        <div class="award-grid core-grid">
+          <button class="award-plaque bronze" type="button"><span class="award-type">Core Value</span><div class="award-name">이재운</div><div class="award-dept">인사팀</div></button>
+          <button class="award-plaque bronze" type="button"><span class="award-type">Core Value</span><div class="award-name">김규리</div><div class="award-dept">재무팀</div></button>
+          <button class="award-plaque bronze" type="button"><span class="award-type">Core Value</span><div class="award-name">정지원</div><div class="award-dept">지원팀</div></button>
+          <button class="award-plaque bronze" type="button"><span class="award-type">Core Value</span><div class="award-name">성기화</div><div class="award-dept">공공사업팀</div></button>
+          <button class="award-plaque bronze" type="button"><span class="award-type">Core Value</span><div class="award-name">한광신</div><div class="award-dept">금융엔터사업팀</div></button>
+          <button class="award-plaque bronze" type="button"><span class="award-type">Core Value</span><div class="award-name">박철희</div><div class="award-dept">사업기획팀</div></button>
+        </div>
+      </div>
+      <footer class="bottombar"><div>Core Value Case</div><div class="progress"><div class="progress-track"><div class="progress-fill"></div></div><span class="count"></span></div></footer>
+    </section>
+
+    <section class="slide awards-slide core-value-slide">
+      <header class="topbar"><div class="brand">Dnotitia</div><div class="quarter">Core Value Case</div></header>
+      <div class="content">
+        <div class="awards-heading"><h2>Core Value Case</h2><div class="awards-group-label">Group 02 / 05</div></div>
+        <div class="award-grid core-grid">
+          <button class="award-plaque bronze" type="button"><span class="award-type">Core Value</span><div class="award-name">김남곤</div><div class="award-dept">AI Tech팀</div></button>
+          <button class="award-plaque bronze" type="button"><span class="award-type">Core Value</span><div class="award-name">김성욱</div><div class="award-dept">Applied Product팀</div></button>
+          <button class="award-plaque bronze" type="button"><span class="award-type">Core Value</span><div class="award-name">정창욱</div><div class="award-dept">Agent팀</div></button>
+          <button class="award-plaque bronze" type="button"><span class="award-type">Core Value</span><div class="award-name">임종혁</div><div class="award-dept">Storage/Cloud팀</div></button>
+          <button class="award-plaque bronze" type="button"><span class="award-type">Core Value</span><div class="award-name">이민철</div><div class="award-dept">Storage/Cloud팀</div></button>
+          <button class="award-plaque bronze" type="button"><span class="award-type">Core Value</span><div class="award-name">김주호</div><div class="award-dept">DB팀</div></button>
+        </div>
+      </div>
+      <footer class="bottombar"><div>Core Value Case</div><div class="progress"><div class="progress-track"><div class="progress-fill"></div></div><span class="count"></span></div></footer>
+    </section>
+
+    <section class="slide awards-slide core-value-slide">
+      <header class="topbar"><div class="brand">Dnotitia</div><div class="quarter">Core Value Case</div></header>
+      <div class="content">
+        <div class="awards-heading"><h2>Core Value Case</h2><div class="awards-group-label">Group 03 / 05</div></div>
+        <div class="award-grid core-grid">
+          <button class="award-plaque bronze" type="button"><span class="award-type">Core Value</span><div class="award-name">정주현</div><div class="award-dept">DB팀</div></button>
+          <button class="award-plaque bronze" type="button"><span class="award-type">Core Value</span><div class="award-name">이정엽</div><div class="award-dept">LLM팀</div></button>
+          <button class="award-plaque bronze" type="button"><span class="award-type">Core Value</span><div class="award-name">차정훈</div><div class="award-dept">Algo.팀</div></button>
+          <button class="award-plaque bronze" type="button"><span class="award-type">Core Value</span><div class="award-name">한동훈</div><div class="award-dept">Algo.팀</div></button>
+          <button class="award-plaque bronze" type="button"><span class="award-type">Core Value</span><div class="award-name">최인준</div><div class="award-dept">Design팀</div></button>
+          <button class="award-plaque bronze" type="button"><span class="award-type">Core Value</span><div class="award-name">함은경</div><div class="award-dept">Design팀</div></button>
+        </div>
+      </div>
+      <footer class="bottombar"><div>Core Value Case</div><div class="progress"><div class="progress-track"><div class="progress-fill"></div></div><span class="count"></span></div></footer>
+    </section>
+
+    <section class="slide awards-slide core-value-slide">
+      <header class="topbar"><div class="brand">Dnotitia</div><div class="quarter">Core Value Case</div></header>
+      <div class="content">
+        <div class="awards-heading"><h2>Core Value Case</h2><div class="awards-group-label">Group 04 / 05</div></div>
+        <div class="award-grid core-grid">
+          <button class="award-plaque bronze" type="button"><span class="award-type">Core Value</span><div class="award-name">장건희</div><div class="award-dept">DV팀</div></button>
+          <button class="award-plaque bronze" type="button"><span class="award-type">Core Value</span><div class="award-name">김영일</div><div class="award-dept">HW P.팀</div></button>
+          <button class="award-plaque bronze" type="button"><span class="award-type">Core Value</span><div class="award-name">서정원</div><div class="award-dept">S.SW팀</div></button>
+          <button class="award-plaque bronze" type="button"><span class="award-type">Core Value</span><div class="award-name">김영윤</div><div class="award-dept">S.SW팀</div></button>
+          <button class="award-plaque bronze" type="button"><span class="award-type">Core Value</span><div class="award-name">박상현</div><div class="award-dept">Vector Platform팀</div></button>
+          <button class="award-plaque bronze" type="button"><span class="award-type">Core Value</span><div class="award-name">문진석</div><div class="award-dept">AI Platform팀</div></button>
+        </div>
+      </div>
+      <footer class="bottombar"><div>Core Value Case</div><div class="progress"><div class="progress-track"><div class="progress-fill"></div></div><span class="count"></span></div></footer>
+    </section>
+
+    <section class="slide awards-slide core-value-slide">
+      <header class="topbar"><div class="brand">Dnotitia</div><div class="quarter">Core Value Case</div></header>
+      <div class="content">
+        <div class="awards-heading"><h2>Core Value Case</h2><div class="awards-group-label">Group 05 / 05</div></div>
+        <div class="award-grid core-grid">
+          <button class="award-plaque bronze" type="button"><span class="award-type">Core Value</span><div class="award-name">양세현</div><div class="award-dept">Arch.팀</div></button>
+          <button class="award-plaque bronze" type="button"><span class="award-type">Core Value</span><div class="award-name">한재흥</div><div class="award-dept">Eng.팀</div></button>
+          <button class="award-plaque bronze" type="button"><span class="award-type">Core Value</span><div class="award-name">전재현</div><div class="award-dept">기술관리팀</div></button>
+          <button class="award-plaque bronze" type="button"><span class="award-type">Core Value</span><div class="award-name">김현진</div><div class="award-dept">R&amp;D센터</div></button>
+          <button class="award-plaque bronze" type="button"><span class="award-type">Core Value</span><div class="award-name">오승근</div><div class="award-dept">DC TF</div></button>
+          <button class="award-plaque bronze" type="button"><span class="award-type">Core Value</span><div class="award-name">최정인</div><div class="award-dept">전략팀</div></button>
+        </div>
+      </div>
+      <footer class="bottombar"><div>Core Value Case</div><div class="progress"><div class="progress-track"><div class="progress-fill"></div></div><span class="count"></span></div></footer>
+    </section>
+
+    <section class="slide section-slide" data-label="DN Awards">
+      <header class="topbar"><div class="brand">Dnotitia</div><div class="quarter">Session</div></header>
+      <div class="content"><div class="section-index">07</div><h2 class="section-title">DN Awards</h2><div class="accent-rule"></div></div>
+      <footer class="bottombar"><div>Session 07</div><div class="progress"><div class="progress-track"><div class="progress-fill"></div></div><span class="count"></span></div></footer>
+    </section>
+
+    <section class="slide awards-slide">
+      <header class="topbar"><div class="brand">Dnotitia</div><div class="quarter">DN Awards</div></header>
+      <div class="content">
+        <div class="awards-heading"><h2>DN Awards</h2><div class="awards-group-label">Group 01 / 06</div></div>
+        <div class="award-grid">
+          <button class="award-plaque gold" type="button"><span class="award-type">Excellence Awards</span><div class="award-name">오세현</div><div class="award-dept">사업본부<br>제품개발그룹 DB팀</div></button>
+          <button class="award-plaque gold" type="button"><span class="award-type">Excellence Awards</span><div class="award-name">한병전</div><div class="award-dept">사업본부<br>제품개발그룹</div></button>
+          <button class="award-plaque gold" type="button"><span class="award-type">Excellence Awards</span><div class="award-name">성한승</div><div class="award-dept">사업본부<br>제품개발그룹 DB팀</div></button>
+          <button class="award-plaque gold" type="button"><span class="award-type">Excellence Awards</span><div class="award-name">김주호</div><div class="award-dept">사업본부<br>제품개발그룹 DB팀</div></button>
+        </div>
+      </div>
+      <footer class="bottombar"><div>Excellence Awards</div><div class="progress"><div class="progress-track"><div class="progress-fill"></div></div><span class="count"></span></div></footer>
+    </section>
+
+    <section class="slide awards-slide">
+      <header class="topbar"><div class="brand">Dnotitia</div><div class="quarter">DN Awards</div></header>
+      <div class="content">
+        <div class="awards-heading"><h2>DN Awards</h2><div class="awards-group-label">Group 02 / 06</div></div>
+        <div class="award-grid">
+          <button class="award-plaque gold" type="button"><span class="award-type">Excellence Awards</span><div class="award-name">김유찬</div><div class="award-dept">R&amp;D센터<br>Core그룹 Vector Platform팀</div></button>
+          <button class="award-plaque gold" type="button"><span class="award-type">Excellence Awards</span><div class="award-name">황영진</div><div class="award-dept">R&amp;D센터<br>Core그룹 S.SW팀</div></button>
+          <button class="award-plaque gold" type="button"><span class="award-type">Excellence Awards</span><div class="award-name">이창희</div><div class="award-dept">R&amp;D센터<br>SoC그룹 HW P.팀</div></button>
+          <button class="award-plaque gold" type="button"><span class="award-type">Excellence Awards</span><div class="award-name">강동현</div><div class="award-dept">R&amp;D센터<br>Core그룹 Arch팀</div></button>
+        </div>
+      </div>
+      <footer class="bottombar"><div>Excellence Awards</div><div class="progress"><div class="progress-track"><div class="progress-fill"></div></div><span class="count"></span></div></footer>
+    </section>
+
+    <section class="slide awards-slide">
+      <header class="topbar"><div class="brand">Dnotitia</div><div class="quarter">DN Awards</div></header>
+      <div class="content">
+        <div class="awards-heading"><h2>DN Awards</h2><div class="awards-group-label">Group 03 / 06</div></div>
+        <div class="award-grid">
+          <button class="award-plaque gold" type="button"><span class="award-type">Excellence Awards</span><div class="award-name">이동훈</div><div class="award-dept">R&amp;D센터<br>SoC그룹 Design팀</div></button>
+          <button class="award-plaque gold" type="button"><span class="award-type">Excellence Awards</span><div class="award-name">이동현</div><div class="award-dept">R&amp;D센터<br>Core그룹 Vector Platform팀</div></button>
+          <button class="award-plaque gold" type="button"><span class="award-type">Excellence Awards</span><div class="award-name">서정원</div><div class="award-dept">R&amp;D센터<br>Core그룹 S.SW팀</div></button>
+          <button class="award-plaque silver" type="button"><span class="award-type">Innovator Awards</span><div class="award-name">배우진</div><div class="award-dept">사업본부<br>고객사업그룹 금융엔터사업팀</div></button>
+        </div>
+      </div>
+      <footer class="bottombar"><div>Excellence Awards / Innovator Awards</div><div class="progress"><div class="progress-track"><div class="progress-fill"></div></div><span class="count"></span></div></footer>
+    </section>
+
+    <section class="slide awards-slide">
+      <header class="topbar"><div class="brand">Dnotitia</div><div class="quarter">DN Awards</div></header>
+      <div class="content">
+        <div class="awards-heading"><h2>DN Awards</h2><div class="awards-group-label">Group 04 / 06</div></div>
+        <div class="award-grid">
+          <button class="award-plaque silver" type="button"><span class="award-type">Innovator Awards</span><div class="award-name">이민철</div><div class="award-dept">사업본부<br>제품개발그룹 Storage/Cloud팀</div></button>
+          <button class="award-plaque silver" type="button"><span class="award-type">Innovator Awards</span><div class="award-name">신현우</div><div class="award-dept">사업본부<br>사업개발그룹 Applied Product팀</div></button>
+          <button class="award-plaque silver" type="button"><span class="award-type">Innovator Awards</span><div class="award-name">김보경</div><div class="award-dept">사업본부<br>사업개발그룹 사업기획팀</div></button>
+          <button class="award-plaque silver" type="button"><span class="award-type">Innovator Awards</span><div class="award-name">김준형</div><div class="award-dept">R&amp;D센터<br>SoC그룹 DV팀</div></button>
+        </div>
+      </div>
+      <footer class="bottombar"><div>Innovator Awards</div><div class="progress"><div class="progress-track"><div class="progress-fill"></div></div><span class="count"></span></div></footer>
+    </section>
+
+    <section class="slide awards-slide">
+      <header class="topbar"><div class="brand">Dnotitia</div><div class="quarter">DN Awards</div></header>
+      <div class="content">
+        <div class="awards-heading"><h2>DN Awards</h2><div class="awards-group-label">Group 05 / 06</div></div>
+        <div class="award-grid">
+          <button class="award-plaque silver" type="button"><span class="award-type">Innovator Awards</span><div class="award-name">이우철</div><div class="award-dept">R&amp;D센터<br>AI그룹 Algo.팀</div></button>
+          <button class="award-plaque silver" type="button"><span class="award-type">Innovator Awards</span><div class="award-name">김언정</div><div class="award-dept">운영본부<br>지원팀</div></button>
+          <button class="award-plaque silver" type="button"><span class="award-type">Innovator Awards</span><div class="award-name">김규리</div><div class="award-dept">운영본부<br>재무팀</div></button>
+          <button class="award-plaque silver" type="button"><span class="award-type">Innovator Awards</span><div class="award-name">한채린</div><div class="award-dept">운영본부<br>인사팀</div></button>
+        </div>
+      </div>
+      <footer class="bottombar"><div>Innovator Awards</div><div class="progress"><div class="progress-track"><div class="progress-fill"></div></div><span class="count"></span></div></footer>
+    </section>
+
+    <section class="slide awards-slide">
+      <header class="topbar"><div class="brand">Dnotitia</div><div class="quarter">DN Awards</div></header>
+      <div class="content">
+        <div class="awards-heading"><h2>DN Awards</h2><div class="awards-group-label">Group 06 / 06</div></div>
+        <div class="award-grid">
+          <button class="award-plaque silver" type="button"><span class="award-type">Innovator Awards</span><div class="award-name">하지현</div><div class="award-dept">운영본부<br>경영기획팀</div></button>
+          <button class="award-plaque silver" type="button"><span class="award-type">Innovator Awards</span><div class="award-name">심지은</div><div class="award-dept">CEO 직속<br>전략팀</div></button>
+          <button class="award-plaque silver" type="button"><span class="award-type">Innovator Awards</span><div class="award-name">전재현</div><div class="award-dept">CEO 직속<br>기술관리팀</div></button>
+          <button class="award-plaque silver" type="button"><span class="award-type">Innovator Awards</span><div class="award-name">오승근</div><div class="award-dept">CEO 직속<br>DC TF</div></button>
+        </div>
+      </div>
+      <footer class="bottombar"><div>Innovator Awards</div><div class="progress"><div class="progress-track"><div class="progress-fill"></div></div><span class="count"></span></div></footer>
+    </section>
+
+    <section class="slide section-slide" data-label="Dnotitia Roadmap">
+      <header class="topbar"><div class="brand">Dnotitia</div><div class="quarter">Session</div></header>
+      <div class="content"><div class="section-index">08</div><h2 class="section-title">Dnotitia Roadmap</h2><div class="accent-rule"></div></div>
+      <footer class="bottombar"><div>Session 08</div><div class="progress"><div class="progress-track"><div class="progress-fill"></div></div><span class="count"></span></div></footer>
+    </section>
+
+    <section class="slide closing">
+      <header class="topbar">
+        <div class="brand">Dnotitia</div>
+        <div class="quarter">Closing</div>
+      </header>
+      <div class="content">
+        <div class="eyebrow">Closing</div>
+        <h2>Leading with pioneering tech, first to the market</h2>
+        <div class="accent-rule"></div>
+      </div>
+      <footer class="bottombar">
+        <div>Thank you</div>
+        <div class="progress"><div class="progress-track"><div class="progress-fill"></div></div><span class="count"></span></div>
+      </footer>
+    </section>
+  </main>
+
+  <nav class="controls" aria-label="Slide navigation">
+    <button type="button" id="prev" aria-label="Previous slide" title="Previous slide">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+    </button>
+    <button type="button" id="next" aria-label="Next slide" title="Next slide">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+    </button>
+  </nav>
+
+  <script>
+    const slides = [...document.querySelectorAll(".slide")];
+    let current = 0;
+
+    function showSlide(index) {
+      current = Math.max(0, Math.min(index, slides.length - 1));
+      slides.forEach((slide, slideIndex) => {
+        const isActive = slideIndex === current;
+        slide.classList.toggle("active", isActive);
+        slide.setAttribute("aria-hidden", String(!isActive));
+        const fill = slide.querySelector(".progress-fill");
+        const count = slide.querySelector(".count");
+        if (fill) fill.style.width = `${((current + 1) / slides.length) * 100}%`;
+        if (count) count.textContent = `${String(current + 1).padStart(2, "0")} / ${String(slides.length).padStart(2, "0")}`;
+      });
+    }
+
+    function nextSlide() {
+      showSlide(current + 1);
+    }
+
+    function prevSlide() {
+      showSlide(current - 1);
+    }
+
+    document.getElementById("next").addEventListener("click", nextSlide);
+    document.getElementById("prev").addEventListener("click", prevSlide);
+
+    window.addEventListener("keydown", (event) => {
+      const forwardKeys = ["ArrowRight", "ArrowDown", "PageDown", " ", "Enter"];
+      const backKeys = ["ArrowLeft", "ArrowUp", "PageUp", "Backspace"];
+      if (forwardKeys.includes(event.key)) {
+        event.preventDefault();
+        nextSlide();
+      }
+      if (backKeys.includes(event.key)) {
+        event.preventDefault();
+        prevSlide();
+      }
+      if (event.key.toLowerCase() === "f") {
+        document.documentElement.requestFullscreen?.();
+      }
+      if (event.key === "Home") showSlide(0);
+      if (event.key === "End") showSlide(slides.length - 1);
+    });
+
+    document.querySelectorAll(".award-plaque").forEach((plaque) => {
+      plaque.addEventListener("click", () => {
+        plaque.classList.remove("sparkle");
+        void plaque.offsetWidth;
+        plaque.classList.add("sparkle");
+        window.setTimeout(() => plaque.classList.remove("sparkle"), 1000);
+      });
+    });
+
+    showSlide(0);
+  </script>
+</body>
+</html>
